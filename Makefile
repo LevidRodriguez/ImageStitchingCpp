@@ -265,7 +265,7 @@ endif
 # Target rules
 all: build
 
-build: deviceQuery
+build: stitchingCUDA
 
 check.deps:
 ifeq ($(SAMPLE_ENABLED),0)
@@ -274,19 +274,19 @@ else
 	@echo "Sample is ready - all dependencies have been met"
 endif
 
-deviceQuery.o:deviceQuery.cpp
+stitchingCUDA.o:stitchingCUDA.cpp
 	$(EXEC) $(NVCC) $(INCLUDES) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -o $@ -c $<
 
-deviceQuery: deviceQuery.o
+stitchingCUDA: stitchingCUDA.o
 	$(EXEC) $(NVCC) $(ALL_LDFLAGS) $(GENCODE_FLAGS) -o $@ $+ $(LIBRARIES)
 	$(EXEC) mkdir -p ../../bin/$(TARGET_ARCH)/$(TARGET_OS)/$(BUILD_TYPE)
 	$(EXEC) cp $@ ../../bin/$(TARGET_ARCH)/$(TARGET_OS)/$(BUILD_TYPE)
 
 run: build
-	$(EXEC) ./deviceQuery
+	$(EXEC) ./stitchingCUDA
 
 clean:
-	rm -f deviceQuery deviceQuery.o
-	rm -rf ../../bin/$(TARGET_ARCH)/$(TARGET_OS)/$(BUILD_TYPE)/deviceQuery
+	rm -f stitchingCUDA stitchingCUDA.o
+	rm -rf ../../bin/$(TARGET_ARCH)/$(TARGET_OS)/$(BUILD_TYPE)/stitchingCUDA
 
 clobber: clean
