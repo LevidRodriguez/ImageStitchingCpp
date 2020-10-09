@@ -11,13 +11,14 @@ def PSNR(original, compressed):
         return 100
     max_pixel = 255.0
     psnr = 20 * log10(max_pixel / sqrt(mse)) 
-    return psnr 
+    return mse, psnr 
   
 def main(original_image, compressed_image): 
     original = cv2.imread(original_image) 
     compressed = cv2.imread(compressed_image, 1) 
-    value = PSNR(original, compressed) 
-    print ("SNR value is %s dB" % value)
+    mse, psnr = PSNR(original, compressed) 
+    print ("MSE value is %s " % mse)
+    print ("SNR value is %s dB" % psnr)
        
 if __name__ == "__main__": 
     if (len(sys.argv)<3):
